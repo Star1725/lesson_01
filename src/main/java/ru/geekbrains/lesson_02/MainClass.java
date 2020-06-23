@@ -4,29 +4,31 @@ package ru.geekbrains.lesson_02;
  * Created by User on 021 21.06.20.
  */
 public class MainClass {
-    private static int[] arr = {4, 2, 9, 12, 5, 7, 19, 2, 19};
+    private static int[] arr5 = {4, 2, 9, 12, 5, 7, 19, 2, 19};
+    private static int[] arr6 = {1, 1, 2, 1, 3, 2};
+    private static int[] arr7 = {0, 1, 2, 3, 4, 5, 6, 7, 9};
     private static int n = -6;
     public static void main(String[] args) {
         //5
         System.out.println("пункт 5. для массива {4, 2, 9, 12, 5, 7, 19, 2, 19}");
-        int[] arrMinMax = getMinMaxOfArray(arr);
+        int[] arrMinMax = getMinMaxOfArray(arr5);
         System.out.println("min = " + arrMinMax[0] + ", max = " + arrMinMax[1]);
         System.out.println();
 
         //6
         System.out.println("пункт 6. для массива {1, 1, 2, 1, 3, 2}");
-        System.out.println("Balance is " + getEqualityOfSums(new int[]{1, 1, 2, 1, 3, 2}));
+        System.out.println("Balance is " + getEqualityOfSums(arr6));
         System.out.println();
 
         //7
         System.out.println("пункт 7. ");
         //отобразить исходный массив
-        for (int x: arr){
+        for (int x: arr7){
             System.out.print(x + " ");
         }
         System.out.println(", сместить на " + n);
         //отобразить сдвинутый массив
-        for (int x: slipMethod(arr, n)) {
+        for (int x: slipMethod(arr7, n)) {
             System.out.print(x + " ");
         }
     }
@@ -49,10 +51,10 @@ public class MainClass {
     //6
     public static boolean getEqualityOfSums (int[] arr){
         boolean balance = false;
-        int sumLeft = 0;
-        int sumRight = 0;
         int num = 1;
-        while (num < arr.length - 1){
+        while (num <= arr.length - 1){
+            int sumLeft, sumRight;
+            sumLeft = sumRight = 0;
             //вычисляем sumLeft
             for (int i = 0; i < num; i++){
                 sumLeft = sumLeft + arr[i];
@@ -65,7 +67,6 @@ public class MainClass {
                 balance = true;
                 break;
             }
-            sumLeft = sumRight = 0;
             num++;
         }
         return balance;
