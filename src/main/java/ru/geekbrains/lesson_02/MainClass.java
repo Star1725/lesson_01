@@ -1,36 +1,49 @@
 package ru.geekbrains.lesson_02;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * Created by User on 021 21.06.20.
  */
 public class MainClass {
-    private static int[] arr5 = {4, 2, 9, 12, 5, 7, 19, 2, 19};
-    private static int[] arr6 = {1, 1, 2, 1, 3, 2};
-    private static int[] arr7 = {0, 1, 2, 3, 4, 5, 6, 7, 9};
-    private static int n = -6;
+    //5
+    private static int[] arr5Var1 = {4, 2, 9, 12, 5, 7, 19, 2, 19};
+    private static int[] arr5Var2 = {264, 12, -45, 347, -1, 78, 189};
+
+    //6
+    private static int[] arr6Var1 = {1, 1, 2, 1, 3, 2};
+    private static int[] arr6Var2 = {1, 5, 2, -3, 3, 2};
+
+    //7
+    private static int[] arr7Var1 = {0, 1, 2, 3, 4, 5, 6, 7, 9};
+    private static int n1 = -6;
+    private static int[] arr7Var2 = {0, 1, 2, 3, 4, 5, 6, 8};
+    private static int n2 = 4;
+
     public static void main(String[] args) {
         //5
-        System.out.println("пункт 5. для массива {4, 2, 9, 12, 5, 7, 19, 2, 19}");
-        int[] arrMinMax = getMinMaxOfArray(arr5);
+        System.out.println("пункт 5.");
+        System.out.println("для массива " + Arrays.toString(arr5Var1));
+        int[] arrMinMax = getMinMaxOfArray(arr5Var1);
+        System.out.println("min = " + arrMinMax[0] + ", max = " + arrMinMax[1]);
+        System.out.println("для массива " + Arrays.toString(arr5Var2));
+        arrMinMax = getMinMaxOfArray(arr5Var2);
         System.out.println("min = " + arrMinMax[0] + ", max = " + arrMinMax[1]);
         System.out.println();
 
         //6
-        System.out.println("пункт 6. для массива {1, 1, 2, 1, 3, 2}");
-        System.out.println("Balance is " + getEqualityOfSums(arr6));
+        System.out.println("пункт 6.");
+        System.out.println("для массива " + Arrays.toString(arr6Var1) + " balance is " + getEqualityOfSums(arr6Var1));
+        System.out.println("для массива " + Arrays.toString(arr6Var2) + " balance is " + getEqualityOfSums(arr6Var2));
         System.out.println();
 
         //7
         System.out.println("пункт 7. ");
-        //отобразить исходный массив
-        for (int x: arr7){
-            System.out.print(x + " ");
-        }
-        System.out.println(", сместить на " + n);
-        //отобразить сдвинутый массив
-        for (int x: slipMethod(arr7, n)) {
-            System.out.print(x + " ");
-        }
+        System.out.println("" + Arrays.toString(arr7Var1) + " сместить на " + n1);
+        System.out.println("" + Arrays.toString(slipMethod(arr7Var1, n1)));
+        System.out.println("" + Arrays.toString(arr7Var2) + " сместить на " + n2);
+        System.out.println("" + Arrays.toString(slipMethod(arr7Var2, n2)));
     }
 
     //5
@@ -80,6 +93,8 @@ public class MainClass {
         int startIndex;
 
         for (int j = 0; j < gcd(arr.length, n); j++){//вычесляем НОД, чтобы узнать на сколько непересекающихся последовательностей можно разложить массив
+                                                     //если НОД = 1, то startIndex = 0 и проходим по всем элементам массива
+                                                     //если НОД = 2, то по массиву нужно будет пройти два раза для startIndex = 0 и startIndex = 1, и
             while (true){
                 //вычесляем индекс для переноса
                 moveIndex = moveIndex + Math.abs(n);
