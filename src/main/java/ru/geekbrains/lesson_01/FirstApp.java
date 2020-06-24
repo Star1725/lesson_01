@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
 public class FirstApp {
         //2
     byte aByte = 8;
-    short aShort = 32767;
+    static short aShort = Short.MAX_VALUE;
     private static int e = 6, f = 10, g = -2;
     long aLong = 100000000L;
     private static float a = 4.5f, b = 6.7f, c = 10.2f, d = 5.9f;
@@ -22,7 +22,7 @@ public class FirstApp {
     private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
     public static void main(String[] args) throws IOException {
-
+        System.out.println("пункт 1. " + aShort);
         //3
         System.out.println("пункт 3. " + arithmeticMethod(a, b, c, d));
 
