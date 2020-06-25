@@ -51,7 +51,7 @@ public class guessTheWord {
             if (word.isEmpty()) System.out.println("Вы не ввели слово!");
             else break;
             }
-        return word;
+        return word.trim();
     }
 
     //метод сравнения слов
