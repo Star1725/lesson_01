@@ -168,6 +168,12 @@ public class TicTacToe_3_3 {
                 }
             }
         }
+        //проверяем остальные строки
+        if(checkRowsOrColumns(DOT_HUMAN, 0, 1)) return false;
+        //проверяем остальные колонки
+        if(checkRowsOrColumns(DOT_HUMAN, 1, 1)) return false;
+        //проверяем диагонали
+        if(checkAllDiagonals(DOT_HUMAN, 1)) return false;
         return true;
     }
 
@@ -215,67 +221,121 @@ public class TicTacToe_3_3 {
     }
 
     private static boolean checkWin(char symbol) {
-        int countIsCheck0 = 0;
-        int countIsCheck2 = 0;
-
-        for (int i = 0; i < SIZE; i++) {
-            //проверка строк(0) и столбцов(1)
-            if (checkRowsOrColumns(i, symbol, 0)) return true;
-            if (checkRowsOrColumns(i, symbol, 1)) return true;
-
-//            //проверка главной диагонали
-//            if (map[i][i] == symbol) countIsCheck0++;
-//            if (map[i][i+1] == symbol)
-//
-//            //проверка обратной диагонали
-//            if (map[i][SIZE - 1 - i] == symbol) countIsCheck2++;
-//
-//            if (countIsCheck0 == DOTS_TO_WIN || countIsCheck2 == DOTS_TO_WIN){
-//                return true;
-//            }
-        }
 
         //проверка всех диагоналей
+        if (checkAllDiagonals(symbol, 0)) return true;
+
+        //проверка строк(0)
+        if (checkRowsOrColumns(symbol, 0, 0)) return true;
+        //проверка  столбцов(1)
+        if (checkRowsOrColumns(symbol, 1, 0)) return true;
+
+        return false;
+    }
+
+    private static boolean checkAllDiagonals(char symbol, int flagAI) {
         for (int i = 0; i <= SIZE - DOTS_TO_WIN  ; i++) {
             for (int j = 0; j <= SIZE - DOTS_TO_WIN; j++){
                 int startIndexI = i;
                 int startIndexJ = j;
                 int endIndex = DOTS_TO_WIN - 1 + j;
-                int countIsCheck4 = 0;
-                int countIsCheck6 = 0;
-
+                int countCheckMainDiagonal = 0;
+                int countCheckReversDiagonal = 0;
+                //проходим по диагоналям массива 4*4 с разными значениями начальных координат i и j: (00),(01),(10),(11)
                 for(; startIndexJ <= endIndex; startIndexJ++ ){
-                    if (map[startIndexI][startIndexJ] == symbol) countIsCheck4++;
-                    if (map[startIndexI][endIndex - startIndexJ + j] == symbol) countIsCheck6++;
+                    if (map[startIndexI][startIndexJ] == symbol) countCheckMainDiagonal++;
+                    if (map[startIndexI][endIndex - startIndexJ + j] == symbol) countCheckReversDiagonal++;
                     startIndexI++;
                 }
-                if (countIsCheck4 == DOTS_TO_WIN || countIsCheck6 == DOTS_TO_WIN){
-                    return true;
+                //метод используется методом проверки на WIN
+                if (flagAI == 0){
+                    if (countCheckMainDiagonal == DOTS_TO_WIN || countCheckReversDiagonal == DOTS_TO_WIN){
+                        return true;
+                    }
+                //метод используется AI для проверки диагоналей
+                } else {
+                    if (countCheckMainDiagonal == DOTS_TO_WIN - 1){
+                        int checkI = i;
+                        int checkJ = j;
+                        int checkEnd = DOTS_TO_WIN - 1 + j;
+                        for (; checkJ <= checkEnd; checkJ++){
+                            if (map[checkI][checkJ] == DOT_EMPTY){
+                                map[checkI][checkJ] = DOT_AI;
+                                return true;
+                            }
+                            checkI++;
+                        }
+                    }
+                    if (countCheckReversDiagonal == DOTS_TO_WIN - 1){
+                        int checkI = i;
+                        int checkJ = j;
+                        int checkEnd = DOTS_TO_WIN - 1 + j;
+                        for (; checkJ <= checkEnd; checkJ++){
+                            if (map[checkI][checkEnd - checkJ + j] == DOT_EMPTY){
+                                map[checkI][checkEnd - checkJ + j] = DOT_AI;
+                                return true;
+                            }
+                            checkI++;
+                        }
+                    }
                 }
             }
         }
-
-
-
-
         return false;
     }
 
-    private static boolean checkRowsOrColumns(int i, char symbol, int flag) {
+    private static boolean checkRowsOrColumns(char symbol, int flagCheck, int flagAI) {
         int countIsCheck = 0;
-        //в зависимости от флага проверяем или строку или колонку
-        for (int j = 0; j < SIZE; j++) {
-            if (flag == 0){
-                if (map[i][j] != symbol) break;
-                else countIsCheck++;
-            } else {
-                if (map[j][i] != symbol) break;
-                else countIsCheck++;
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                //проверяем строки
+                if (flagCheck == 0){//
+                    if (map[i][j] != symbol || map[i][j] == DOT_EMPTY) {
+                        countIsCheck = 0;
+                        continue;
+                    }
+                    else {
+                        countIsCheck++;
+                        //определяем использование метода(flagAI == 0 - для определения выигравщего, flagAI == 1 - для анализа AI пользовательских ходов)
+                        if (flagAI == 0) {
+                            if (countIsCheck == DOTS_TO_WIN) return true;
+                        } else {
+                            if (countIsCheck == DOTS_TO_WIN/2) {
+                                for (int z = 0; z < SIZE; z++){
+                                    if (map[i][z] != DOT_HUMAN && map[i][z] == DOT_EMPTY){
+                                        map[i][z] = DOT_AI;
+                                        return true;
+                                    } else continue;
+                                }
+                            }
+                        }
+                    }
+                }
+                //проверяем колонки
+                else {
+                    if (map[j][i] != symbol || map[j][i] == DOT_EMPTY) {
+                        countIsCheck = 0;
+                        continue;
+                    }
+                    else {
+                        countIsCheck++;
+                        //определяем использование метода(flagAI == 0 - для определения выигравщего, flagAI == 1 - для анализа AI пользовательских ходов)
+                        if (flagAI == 0) {
+                            if (countIsCheck == DOTS_TO_WIN) return true;
+                        } else {
+                            if (countIsCheck == DOTS_TO_WIN/2) {
+                                for (int z = 0; z < SIZE; z++){
+                                    if (map[z][i] != DOT_HUMAN && map[z][i] == DOT_EMPTY){
+                                        map[z][i] = DOT_AI;
+                                        return true;
+                                    } else continue;
+                                }
+                            }
+                        }
+                    }
+                }
             }
-        }
-
-        if (countIsCheck == DOTS_TO_WIN){
-            return true;
+            countIsCheck = 0;
         }
         return false;
     }
