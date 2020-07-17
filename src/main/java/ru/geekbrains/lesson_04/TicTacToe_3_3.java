@@ -223,27 +223,40 @@ public class TicTacToe_3_3 {
             if (checkRowsOrColumns(i, symbol, 0)) return true;
             if (checkRowsOrColumns(i, symbol, 1)) return true;
 
-            //проверка главной диагонали
-            if (map[i][i] == symbol) countIsCheck0++;
-            if (map[i][i+1] == symbol)
+//            //проверка главной диагонали
+//            if (map[i][i] == symbol) countIsCheck0++;
+//            if (map[i][i+1] == symbol)
+//
+//            //проверка обратной диагонали
+//            if (map[i][SIZE - 1 - i] == symbol) countIsCheck2++;
+//
+//            if (countIsCheck0 == DOTS_TO_WIN || countIsCheck2 == DOTS_TO_WIN){
+//                return true;
+//            }
+        }
 
-            //проверка обратной диагонали
-            if (map[i][SIZE - 1 - i] == symbol) countIsCheck2++;
+        //проверка всех диагоналей
+        for (int i = 0; i <= SIZE - DOTS_TO_WIN  ; i++) {
+            for (int j = 0; j <= SIZE - DOTS_TO_WIN; j++){
+                int startIndexI = i;
+                int startIndexJ = j;
+                int endIndex = DOTS_TO_WIN - 1 + j;
+                int countIsCheck4 = 0;
+                int countIsCheck6 = 0;
 
-            if (countIsCheck0 == DOTS_TO_WIN || countIsCheck2 == DOTS_TO_WIN){
-                return true;
+                for(; startIndexJ <= endIndex; startIndexJ++ ){
+                    if (map[startIndexI][startIndexJ] == symbol) countIsCheck4++;
+                    if (map[startIndexI][endIndex - startIndexJ + j] == symbol) countIsCheck6++;
+                    startIndexI++;
+                }
+                if (countIsCheck4 == DOTS_TO_WIN || countIsCheck6 == DOTS_TO_WIN){
+                    return true;
+                }
             }
         }
 
-        int startIndex = 0;
-        int endIndex = DOTS_TO_WIN - 1;
 
-        while (endIndex <= SIZE){
 
-            for(; startIndex <= endIndex; startIndex++ ){
-                if (map[startIndex][startIndex] == symbol) countIsCheck0++;
-            }
-        }
 
         return false;
     }
