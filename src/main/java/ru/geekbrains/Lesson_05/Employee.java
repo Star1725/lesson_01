@@ -8,16 +8,20 @@ public class Employee {
     private int age;
     private String Position;
     private String Email;
-    private int phone;
+    private String Phone;
     private int salary;
 
-    public Employee(String position, String FIO, int age, String email, int phone, int salary) {
-        Position = position;
+    public Employee(String position, String FIO, int age, String email, String Phone, int salary) {
+        this.Position = position;
         this.FIO = FIO;
         this.age = age;
-        Email = email;
-        this.phone = phone;
+        this.Email = email;
+        this.Phone = Phone;
         this.salary = salary;
+    }
+
+    public int getAge() {
+        return age;
     }
 
     public void printInfo(){
@@ -26,13 +30,12 @@ public class Employee {
 
     @Override
     public String toString() {
-        return "Employee{" +
-                "FIO='" + FIO + '\'' +
-                ", age=" + age +
-                ", Position='" + Position + '\'' +
-                ", Email='" + Email + '\'' +
-                ", phone=" + phone +
-                ", salary=" + salary +
-                '}';
+        return "Сотрудник: " +
+                "FIO = " + FIO +
+                ", age = " + age +
+                ", Position = " + Position +
+                ", Email = " + Email +
+                ", phone = " + Phone +
+                ", salary = " + salary;
     }
 }
