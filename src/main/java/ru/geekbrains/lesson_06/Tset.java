@@ -28,7 +28,9 @@ public class Tset {
             }
             Thread.sleep(500);
         }
-        System.out.println("В соревнованиях участвовал коты в количестве " + Cat.getCountCats() +
-                ", собаки в количестве " + Dog.getCountDogs() + ". Всего было " + Animal.getCountAnimals() + " животных");
+        System.out.println("В соревнованиях участвовали: " +
+                "\n- коты в количестве " + Cat.getCountCats() +
+                "\n- собаки в количестве " + Dog.getCountDogs() +
+                "\nВсего было " + Animal.getCountAnimals() + " животных");
     }
 }
