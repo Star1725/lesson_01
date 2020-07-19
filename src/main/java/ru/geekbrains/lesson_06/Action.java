@@ -7,4 +7,5 @@ public interface Action {
 
     void run(int range);
     void swim(int range);
+    void jump(double height);
 }
