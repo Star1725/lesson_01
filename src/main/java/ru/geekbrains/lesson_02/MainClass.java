@@ -22,6 +22,7 @@ public class MainClass {
     private static int n2 = 4;
 
     public static void main(String[] args) {
+        System.out.println("Добавил данную строку для Pull Requests" + "\n");
         //5
         System.out.println("пункт 5.");
         System.out.println("для массива " + Arrays.toString(arr5Var1));
